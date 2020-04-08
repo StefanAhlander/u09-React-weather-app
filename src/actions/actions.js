@@ -1,0 +1,1 @@
+export const TOGGLE_DEGREES = 'TOGGLE_DEGREES';

@@ -1,24 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
+import PageNav from './PageNav';
+import { WeatherProvider } from './contexts/weather.context';
 import './App.css';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import Home from './Home';
+import Forecast from './Forecast';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <WeatherProvider>
+        <BrowserRouter>
+          <PageNav />
+          <Switch>
+            <Route exact path='/current' component={Home} />
+            <Route exact path='/forecast' component={Forecast} />
+            <Redirect to='/current' />
+          </Switch>
+        </BrowserRouter>
+      </WeatherProvider>
     </div>
   );
 }
