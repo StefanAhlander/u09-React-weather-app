@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useReducer, useEffect } from 'react';
 
 export default function useLocalStorageState(key, defaultValue, reducer) {
@@ -14,9 +15,7 @@ export default function useLocalStorageState(key, defaultValue, reducer) {
   });
 
   useEffect(() => {
-    console.log('Updating loclaStorage');
     window.localStorage.setItem(key, JSON.stringify(state));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   return [state, dispatch];

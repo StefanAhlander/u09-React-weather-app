@@ -1,24 +1,19 @@
 import React, { createContext } from 'react';
-import reducer from '../reducers/reducer.js';
+import degreesReducer from '../reducers/degreesReducer.js';
 import useLocalStorageReducer from '../hooks/useLocalStorageReducer';
 
-export const WeatherContext = createContext();
+export const DegreesContext = createContext();
 
 export function WeatherProvider(props) {
-  const defaultValue = {
-    isCelsius: true,
-    locationCity: 'Stockholm',
-    locationCountry: 'se',
-  };
-  const [state, dispatch] = useLocalStorageReducer(
-    'weather',
-    defaultValue,
-    reducer
+  const [isCelsius, toggleIsCelsius] = useLocalStorageReducer(
+    'isCelsius',
+    true,
+    degreesReducer
   );
 
   return (
-    <WeatherContext.Provider value={{ state, dispatch }}>
+    <DegreesContext.Provider value={{ isCelsius, toggleIsCelsius }}>
       {props.children}
-    </WeatherContext.Provider>
+    </DegreesContext.Provider>
   );
 }
