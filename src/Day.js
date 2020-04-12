@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ThreeHours from './ThreeHours';
 
-export default function Day(props) {
+function Day(props) {
   return (
     <>
       <h3>{props.date}</h3>
@@ -11,3 +11,5 @@ export default function Day(props) {
     </>
   );
 }
+
+export default memo(Day);

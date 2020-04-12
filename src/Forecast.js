@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useContext, memo } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import getWeatherDataAtLocation from './utils/getWeatherDataAtLocation';
 import getWeatherList from './utils/getWeatherList';
 import Day from './Day';
@@ -12,10 +12,6 @@ function Forecast() {
   };
 
   const [state, setState] = useState(initialState);
-
-  /*  function to get first the current coordinates and then, using the coordinates
-      get the current weather at thet location.
-   */
 
   // On component mount fetch data for the component, only once
   useEffect(() => {

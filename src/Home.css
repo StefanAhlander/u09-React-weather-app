@@ -1,0 +1,21 @@
+.Home {
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.35),
+    4px 4px 8px 8px rgba(0, 0, 0, 0.15);
+}
+
+.Home.card {
+  font-size: 1.2rem;
+  padding: 0;
+}
+
+.Home .temp-img {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.img-container {
+  background-color: rgb(196, 229, 240);
+  border-radius: 50%;
+}

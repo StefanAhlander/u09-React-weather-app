@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import getTemp from './utils/getTemp';
 import { DegreesContext } from './contexts/weather.context';
 
-export default function ThreeHours(props) {
+function ThreeHours(props) {
   const { isCelsius } = useContext(DegreesContext);
 
   return (
@@ -22,3 +22,5 @@ export default function ThreeHours(props) {
     </div>
   );
 }
+
+export default memo(ThreeHours);
