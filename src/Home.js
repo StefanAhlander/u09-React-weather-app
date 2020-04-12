@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext, memo } from 'react';
 import { DegreesContext } from './contexts/weather.context';
-import { BASE_URL, API_KEY } from './app-config';
 import getTemp from './utils/getTemp';
-import getPosition from './utils/getPosition';
-import fetchData from './utils/fetchData';
+import getWeatherDataAtLocation from './utils/getWeatherDataAtLocation';
 
 function Home() {
   // get current state for isCelsius for conversion to the correct degrees
@@ -18,44 +16,9 @@ function Home() {
 
   const [state, setState] = useState(initialState);
 
-  /*  function to get first the current coordinates and then, using the coordinates
-      get the current weather at thet location.
-   */
-  async function getWeatherData() {
-    try {
-      const {
-        coords: { latitude: lat },
-        coords: { longitude: lon },
-      } = await getPosition();
-
-      setState({
-        ...state,
-        isLoading: true,
-      });
-
-      const data = await fetchData(
-        `${BASE_URL}weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`
-      );
-
-      setState({
-        ...state,
-        isLoading: false,
-        data: data,
-      });
-      // catch any errors getting coordinates or weather data
-    } catch (error) {
-      console.error(error);
-      setState({
-        ...state,
-        isLoading: false,
-        hasError: `Unfortunately there is an error: ${error}`,
-      });
-    }
-  }
-
   // On component mount fetch data for the component, only once
   useEffect(() => {
-    getWeatherData();
+    getWeatherDataAtLocation('weather', state, setState);
   }, []);
 
   // destructure state to shorten render code
@@ -83,6 +46,10 @@ function Home() {
         <h3>
           {getTemp(data.main.temp, isCelsius)} °{isCelsius ? 'C' : 'F'}
         </h3>
+        <p>
+          Wind: <span>{data.wind.speed} m/s, </span>
+          <span>{data.wind.deg}°</span>
+        </p>
         <p>Humidity: {data.main.humidity} %</p>
         <p>Sunrise: {new Date(data.sys.sunrise * 1000).toLocaleTimeString()}</p>
         <p>Sunset: {new Date(data.sys.sunset * 1000).toLocaleTimeString()}</p>
