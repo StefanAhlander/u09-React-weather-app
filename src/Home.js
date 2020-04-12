@@ -38,7 +38,7 @@ function Home() {
     return <h1>Loading...</h1>;
   } else if (data !== null) {
     return (
-      <div className='Home card col-xs-11 col-sm-8 col-md-6 col-lg-4 mx-auto mt-2'>
+      <div className='Home card col-xs-10 col-sm-8 col-md-7 col-lg-6 col-xl-5 mx-auto mt-2'>
         <h1 className='card-header text-center'>{data.name}</h1>
         <div className='card-body'>
           <h3 className='card-subtitle text-center'>
@@ -50,7 +50,6 @@ function Home() {
             </h2>
             <span className='img-container'>
               <img
-                className='card-img-right'
                 src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
                 alt={data.weather[0].description}
               />

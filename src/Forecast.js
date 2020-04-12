@@ -3,6 +3,7 @@ import React, { useState, useEffect, memo } from 'react';
 import getWeatherDataAtLocation from './utils/getWeatherDataAtLocation';
 import getWeatherList from './utils/getWeatherList';
 import Day from './Day';
+import './Forecast.css';
 
 function Forecast() {
   const initialState = {
@@ -36,12 +37,14 @@ function Forecast() {
     return <h1>Loading...</h1>;
   } else if (data !== null) {
     return (
-      <>
-        <h1>{data.city.name}</h1>
-        {Object.keys(list).map((date) => (
-          <Day key={date} date={date} list={list[date]} />
-        ))}
-      </>
+      <div className='Forecast card col-xs-11 col-sm-9 col-md-8 col-lg-6 col-xl-4 mx-auto mt-2'>
+        <h1 className='card-header text-center'>{data.city.name}</h1>
+        <div className='card-body'>
+          {Object.keys(list).map((date) => (
+            <Day key={date} date={date} list={list[date]} />
+          ))}
+        </div>
+      </div>
     );
   } else {
     return <h1>Getting your location...</h1>;

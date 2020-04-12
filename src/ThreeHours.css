@@ -1,0 +1,18 @@
+.ThreeHours > li {
+  background-color: rgb(225, 245, 252);
+  margin-bottom: 0.5rem;
+}
+
+.ThreeHours .temp-img,
+.ThreeHours .info-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.ThreeHours .img-container {
+  background-color: white;
+  border-radius: 50%;
+  height: 3rem;
+}
