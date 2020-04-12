@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, memo } from 'react';
 import { DegreesContext } from './contexts/weather.context';
 import { BASE_URL, API_KEY } from './app-config';
-import axios from 'axios';
 import getTemp from './utils/getTemp';
+import getPosition from './utils/getPosition';
+import fetchData from './utils/fetchData';
 
-export default function Home() {
-  const { isCelsius, toggleIsCelsius } = useContext(DegreesContext);
+function Home() {
+  // get current state for isCelsius for conversion to the correct degrees
+  const { isCelsius } = useContext(DegreesContext);
 
   const initialState = {
     isLoading: false,
@@ -16,110 +18,55 @@ export default function Home() {
 
   const [state, setState] = useState(initialState);
 
-  useEffect(() => {
-    function success(position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      const url = `${BASE_URL}weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+  /*  function to get first the current coordinates and then, using the coordinates
+      get the current weather at thet location.
+   */
+  async function getWeatherData() {
+    try {
+      const {
+        coords: { latitude: lat },
+        coords: { longitude: lon },
+      } = await getPosition();
 
-      // Mock API-call
-      setState({
-        ...state,
-        isLoading: false,
-        data: {
-          coord: {
-            lon: 17.66,
-            lat: 59.84,
-          },
-          weather: [
-            {
-              id: 800,
-              main: 'Clear',
-              description: 'clear sky',
-              icon: '01d',
-            },
-          ],
-          base: 'stations',
-          main: {
-            temp: 280.9,
-            feels_like: 272.62,
-            temp_min: 280.15,
-            temp_max: 282.15,
-            pressure: 1013,
-            humidity: 42,
-          },
-          visibility: 10000,
-          wind: {
-            speed: 8.2,
-            deg: 330,
-          },
-          clouds: {
-            all: 2,
-          },
-          dt: 1586422005,
-          sys: {
-            type: 1,
-            id: 1731,
-            country: 'SE',
-            sunrise: 1586404182,
-            sunset: 1586454693,
-          },
-          timezone: 7200,
-          id: 2666199,
-          name: 'Uppsala',
-          cod: 200,
-        },
-      });
-
-      /* axios
-        .get(url)
-        .then((data) => {
-          if (data.statusText !== 'OK') {
-            throw new Error(`Loading Error: ${data.status}`);
-          }
-          setState({
-            ...state,
-            isLoading: false,
-            data: data.data,
-          });
-        })
-        .catch((error) => {
-          setState({
-            ...state,
-            isLoading: false,
-            hasError: `Error loading from API: ${error}`,
-          });
-        }); */
-    }
-
-    function error() {
-      setState({
-        ...state,
-        isLoading: false,
-        hasError: 'Unable to retrieve your location',
-      });
-    }
-
-    if (!navigator.geolocation) {
-      setState({
-        ...state,
-        hasError: 'Geolocation is not supported by your browser',
-      });
-    } else {
       setState({
         ...state,
         isLoading: true,
       });
-      navigator.geolocation.getCurrentPosition(success, error);
+
+      const data = await fetchData(
+        `${BASE_URL}weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+      );
+
+      setState({
+        ...state,
+        isLoading: false,
+        data: data,
+      });
+      // catch any errors getting coordinates or weather data
+    } catch (error) {
+      console.error(error);
+      setState({
+        ...state,
+        isLoading: false,
+        hasError: `Unfortunately there is an error: ${error}`,
+      });
     }
+  }
+
+  // On component mount fetch data for the component, only once
+  useEffect(() => {
+    getWeatherData();
   }, []);
 
-  const { error, isLoading, data } = state;
-  if (error) {
+  // destructure state to shorten render code
+  const { hasError, isLoading, data } = state;
+
+  // Render
+  if (hasError) {
     return (
       <>
-        <h1>Unfortunately there is an error</h1>
-        <p>{state.error}</p>
+        <h3>Unfortunately there is an error:</h3>
+        <p>{hasError}</p>
       </>
     );
   } else if (isLoading) {
@@ -145,3 +92,6 @@ export default function Home() {
     return <h1>Getting your location...</h1>;
   }
 }
+
+// use momo to prevent any unnessecary renders
+export default memo(Home);

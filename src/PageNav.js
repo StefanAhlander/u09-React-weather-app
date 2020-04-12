@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import { Navbar, Nav, Form } from 'react-bootstrap';
 import { DegreesContext } from './contexts/weather.context';
 import { toggleDegreesAction } from './actions/actionCreators';
 import SearchLocation from './SearchLocation';
 import { Link, NavLink } from 'react-router-dom';
 
-export default function PageNav(props) {
+function PageNav(props) {
   const { isCelsius, toggleIsCelsius } = useContext(DegreesContext);
   return (
     <Navbar bg='dark' variant='dark' expand='lg'>
@@ -39,3 +39,5 @@ export default function PageNav(props) {
     </Navbar>
   );
 }
+
+export default memo(PageNav);
