@@ -33,14 +33,14 @@ export default function ForecastCity(props) {
   if (hasError) {
     return (
       <DisplayPanel>
-        <h3>Unfortunately there is an error:</h3>
-        <p>{hasError}</p>
+        <h3 className='text-center'>Unfortunately there is an error:</h3>
+        <p className='text-center'>{hasError}</p>
       </DisplayPanel>
     );
   } else if (isLoading) {
     return (
       <DisplayPanel>
-        <h1>Loading...</h1>
+        <h1 className='text-center'>Loading...</h1>
       </DisplayPanel>
     );
   } else if (data !== null) {
@@ -55,6 +55,10 @@ export default function ForecastCity(props) {
       </DisplayPanel>
     );
   } else {
-    return <h1>Getting your location...</h1>;
+    return (
+      <DisplayPanel>
+        <h1 className='text-center'>Getting your location...</h1>
+      </DisplayPanel>
+    );
   }
 }
