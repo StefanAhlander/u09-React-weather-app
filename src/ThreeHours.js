@@ -12,7 +12,9 @@ function ThreeHours(props) {
       <li className='list-group-item'>
         <div className='temp-img my-3'>
           <h4>{props.dt_txt.split(' ')[1].slice(0, 5)} </h4>
-          <h5>{props.weather[0].description}</h5>
+          <h3>
+            {getTemp(props.main.temp, isCelsius)} °{isCelsius ? 'C' : 'F'}
+          </h3>
           <span className='img-container'>
             <img
               src={`http://openweathermap.org/img/wn/${props.weather[0].icon}.png`}
@@ -21,9 +23,7 @@ function ThreeHours(props) {
           </span>
         </div>
         <div className='info-row'>
-          <h3>
-            {getTemp(props.main.temp, isCelsius)} °{isCelsius ? 'C' : 'F'}
-          </h3>
+          <h4>{props.weather[0].description}</h4>
           <p>Wind: {props.wind.speed} m/s</p>
           <span>
             <img
