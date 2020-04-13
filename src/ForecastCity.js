@@ -20,18 +20,16 @@ export default function ForecastCity(props) {
 
   const [state, setState] = useState(initialState);
 
-  // On component mount fetch data for the component, only once
   useEffect(() => {
     getWeatherAtCity('forecast', city, state, setState);
   }, [location]);
 
-  // destructure state to shorten render code
   const { hasError, isLoading, data } = state;
   let list = [];
   if (data) {
     list = getWeatherList(data);
   }
-  // Render
+
   if (hasError) {
     return (
       <DisplayPanel>

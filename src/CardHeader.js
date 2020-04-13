@@ -15,9 +15,7 @@ export default function CardHeader(props) {
     ? path.replace(/^\/\w+/.exec(path)[0], '')
     : '';
   const isFavourite = favourites.some(
-    (item) =>
-      item.path.slice(item.path.lastIndexOf('/')) ===
-      location.pathname.slice(location.pathname.lastIndexOf('/'))
+    (item) => item.path.slice(item.path.lastIndexOf('/')) === basePath
   );
   const color = isFavourite ? 'yellow' : 'gray';
 
