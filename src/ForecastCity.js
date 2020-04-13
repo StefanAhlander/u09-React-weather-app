@@ -1,12 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, memo } from 'react';
-import getWeatherDataAtLocation from './utils/getWeatherDataAtLocation';
+import React, { useState, useEffect } from 'react';
+import getWeatherAtCity from './utils/getWeatherAtCity';
 import getWeatherList from './utils/getWeatherList';
 import Day from './Day';
 import DisplayPanel from './DisplayPanel';
 import './Forecast.css';
+import { useLocation } from 'react-router-dom';
 
-function Forecast() {
+export default function ForecastCity(props) {
+  const city = props.match.params.city;
+  const location = useLocation();
+
   const initialState = {
     isLoading: false,
     hasError: false,
@@ -17,8 +21,8 @@ function Forecast() {
 
   // On component mount fetch data for the component, only once
   useEffect(() => {
-    getWeatherDataAtLocation('forecast', state, setState);
-  }, []);
+    getWeatherAtCity('forecast', city, state, setState);
+  }, [location]);
 
   // destructure state to shorten render code
   const { hasError, isLoading, data } = state;
@@ -55,6 +59,3 @@ function Forecast() {
     return <h1>Getting your location...</h1>;
   }
 }
-
-// use momo to prevent any unnessecary renders
-export default memo(Forecast);

@@ -11,8 +11,8 @@ function ThreeHours(props) {
     <div className='ThreeHours'>
       <li className='list-group-item'>
         <div className='temp-img my-3'>
-          <h3>{props.dt_txt.split(' ')[1].slice(0, 5)} </h3>
-          <h3>{props.weather[0].description}</h3>
+          <h4>{props.dt_txt.split(' ')[1].slice(0, 5)} </h4>
+          <h5>{props.weather[0].description}</h5>
           <span className='img-container'>
             <img
               src={`http://openweathermap.org/img/wn/${props.weather[0].icon}.png`}
@@ -24,13 +24,13 @@ function ThreeHours(props) {
           <h3>
             {getTemp(props.main.temp, isCelsius)} °{isCelsius ? 'C' : 'F'}
           </h3>
-          <h4>Wind: {props.wind.speed} m/s</h4>
+          <p>Wind: {props.wind.speed} m/s</p>
           <span>
             <img
               style={{
                 height: '1.5rem',
                 marginLeft: '1rem',
-                transform: `rotate(${props.wind.deg}deg)`,
+                transform: `rotate(${props.wind.deg + 180}deg)`,
               }}
               src={arrow}
               alt={`${props.wind.deg}°`}

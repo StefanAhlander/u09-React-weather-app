@@ -1,13 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useContext, memo } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { DegreesContext } from './contexts/weather.context';
-import getWeatherDataAtLocation from './utils/getWeatherDataAtLocation';
+import getWeatherAtCity from './utils/getWeatherAtCity';
 import CurrentWeather from './CurrentWeather';
 import DisplayPanel from './DisplayPanel';
+import { useLocation } from 'react-router-dom';
 
-function Home() {
+export default function CurrentCity(props) {
   // get current state for isCelsius for conversion to the correct degrees
   const { isCelsius } = useContext(DegreesContext);
+  const city = props.match.params.city;
+  const location = useLocation();
 
   const initialState = {
     isLoading: false,
@@ -19,8 +22,8 @@ function Home() {
 
   // On component mount fetch data for the component, only once
   useEffect(() => {
-    getWeatherDataAtLocation('weather', currentWeather, setCurrentWeather);
-  }, []);
+    getWeatherAtCity('weather', city, currentWeather, setCurrentWeather);
+  }, [location]);
 
   // destructure state to shorten render code
   const { hasError, isLoading, data } = currentWeather;
@@ -49,6 +52,3 @@ function Home() {
     return <h1>Getting your location...</h1>;
   }
 }
-
-// use momo to prevent any unnessecary renders
-export default memo(Home);

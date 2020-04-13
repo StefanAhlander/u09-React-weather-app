@@ -1,0 +1,11 @@
+.CurrentWeather .temp-img {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.CurrentWeather .img-container {
+  background-color: rgb(196, 229, 240);
+  border-radius: 50%;
+}
