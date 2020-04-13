@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext, memo } from 'react';
+import { Link } from 'react-router-dom';
 import { DegreesContext } from './contexts/weather.context';
 import getWeatherDataAtLocation from './utils/getWeatherDataAtLocation';
 import CurrentWeather from './CurrentWeather';
@@ -31,6 +32,7 @@ function Home() {
       <DisplayPanel>
         <h3 className='text-center'>Unfortunately there is an error:</h3>
         <p className='text-center'>{hasError}</p>
+        <Link to='/'>Reset</Link>
       </DisplayPanel>
     );
   } else if (isLoading) {

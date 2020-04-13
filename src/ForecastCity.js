@@ -6,7 +6,7 @@ import Day from './Day';
 import DisplayPanel from './DisplayPanel';
 import CardHeader from './CardHeader';
 import './Forecast.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 export default function ForecastCity(props) {
   const city = props.match.params.city;
@@ -35,6 +35,7 @@ export default function ForecastCity(props) {
       <DisplayPanel>
         <h3 className='text-center'>Unfortunately there is an error:</h3>
         <p className='text-center'>{hasError}</p>
+        <Link to='/'>Reset</Link>
       </DisplayPanel>
     );
   } else if (isLoading) {
