@@ -1,24 +1,38 @@
 import React, { useContext, memo } from 'react';
-import { Navbar, Nav, Form } from 'react-bootstrap';
+import { Navbar, Nav, Form, NavDropdown } from 'react-bootstrap';
 import { DegreesContext } from './contexts/weather.context';
+import { FavouritesContext } from './contexts/weather.context';
 import { toggleDegreesAction } from './actions/actionCreators';
 import SearchLocation from './SearchLocation';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 function PageNav(props) {
   const { isCelsius, toggleIsCelsius } = useContext(DegreesContext);
+  const { favourites } = useContext(FavouritesContext);
   const location = useLocation();
   const path = location.pathname;
-  let basePath = '';
-  if (/^\/\w+/.exec(path)) {
-    basePath = path.replace(/^\/\w+/.exec(path)[0], '');
-  }
+  let basePath = /^\/\w+/.exec(path)
+    ? path.replace(/^\/\w+/.exec(path)[0], '')
+    : '';
 
-  console.log(basePath);
   const goLocal = basePath ? (
     <Nav.Link as={NavLink} exact to={`/`}>
       Go Local
     </Nav.Link>
+  ) : (
+    ''
+  );
+
+  const favouriteNav = favourites.length ? (
+    <NavDropdown title='Favourites' id='basic-nav-dropdown'>
+      {favourites.map((item) => {
+        return (
+          <NavDropdown.Item as={Link} exact to={item.path}>
+            {item.name}
+          </NavDropdown.Item>
+        );
+      })}
+    </NavDropdown>
   ) : (
     ''
   );
@@ -50,6 +64,7 @@ function PageNav(props) {
             Five day Forecast
           </Nav.Link>
           {goLocal}
+          {favouriteNav}
         </Nav>
         <SearchLocation />
       </Navbar.Collapse>

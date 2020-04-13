@@ -4,6 +4,7 @@ import getWeatherDataAtLocation from './utils/getWeatherDataAtLocation';
 import getWeatherList from './utils/getWeatherList';
 import Day from './Day';
 import DisplayPanel from './DisplayPanel';
+import CardHeader from './CardHeader';
 import './Forecast.css';
 
 function Forecast() {
@@ -43,7 +44,7 @@ function Forecast() {
   } else if (data !== null) {
     return (
       <DisplayPanel>
-        <h1 className='card-header text-center'>{data.city.name}</h1>
+        <CardHeader name={data.city.name} />
         <div className='card-body'>
           {Object.keys(list).map((date) => (
             <Day key={date} date={date} list={list[date]} />

@@ -1,8 +1,10 @@
 import React, { createContext } from 'react';
 import degreesReducer from '../reducers/degreesReducer.js';
+import favouritesReducer from '../reducers/favouritesReducer.js';
 import useLocalStorageReducer from '../hooks/useLocalStorageReducer';
 
 export const DegreesContext = createContext();
+export const FavouritesContext = createContext();
 
 export function WeatherProvider(props) {
   const [isCelsius, toggleIsCelsius] = useLocalStorageReducer(
@@ -11,9 +13,17 @@ export function WeatherProvider(props) {
     degreesReducer
   );
 
+  const [favourites, dispatchFavourites] = useLocalStorageReducer(
+    'favourites',
+    [],
+    favouritesReducer
+  );
+
   return (
     <DegreesContext.Provider value={{ isCelsius, toggleIsCelsius }}>
-      {props.children}
+      <FavouritesContext.Provider value={{ favourites, dispatchFavourites }}>
+        {props.children}
+      </FavouritesContext.Provider>
     </DegreesContext.Provider>
   );
 }

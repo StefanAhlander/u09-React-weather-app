@@ -2,12 +2,13 @@ import React from 'react';
 import arrow from './img/arrow.png';
 import './CurrentWeather.css';
 import getTemp from './utils/getTemp';
+import CardHeader from './CardHeader';
 
 export default function CurrentWeather(props) {
   const { data, isCelsius } = props;
   return (
     <div className='CurrentWeather'>
-      <h1 className='card-header text-center'>{data.name}</h1>
+      <CardHeader name={data.name} />
       <div className='card-body'>
         <h3 className='card-subtitle text-center'>
           {data.weather[0].description}

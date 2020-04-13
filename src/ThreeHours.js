@@ -43,18 +43,3 @@ function ThreeHours(props) {
 }
 
 export default memo(ThreeHours);
-
-/*
-          <div className='temp-img my-3'>
-            <h2>
-              {getTemp(data.main.temp, isCelsius)} °{isCelsius ? 'C' : 'F'}
-            </h2>
-            <span className='img-container'>
-              <img
-                className='card-img-right'
-                src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
-                alt={data.weather[0].description}
-              />
-            </span>
-          </div>
-*/
