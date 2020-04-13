@@ -27,7 +27,7 @@ function PageNav(props) {
     <NavDropdown title='Favourites' id='basic-nav-dropdown'>
       {favourites.map((item) => {
         return (
-          <NavDropdown.Item as={Link} exact to={item.path}>
+          <NavDropdown.Item as={Link} exact to={item.path} key={item.name}>
             {item.name}
           </NavDropdown.Item>
         );
