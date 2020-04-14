@@ -27,6 +27,7 @@ function SearchLocation(props) {
         placeholder='Search'
         className='mr-sm-2'
         onChange={handleChange}
+        title='Search for cities world wide. For more specificity add comma and country code: ",countrycode". For example "Solna,SE" with no space between city and country code.'
       />
       <Button variant='outline-success' onClick={handleSubmit}>
         Search
